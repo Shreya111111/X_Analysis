@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tweet Sentiment Analysis</title>
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+            }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tweet Sentiment Analysis</h1>
+        <form id="sentiment-form">
+            <label for="tweet">Enter a tweet:</label>
+            <textarea id="tweet" name="tweet" rows="4" cols="50" required></textarea>
+            <button type="submit">Analyze</button>
+        </form>
+        <div id="result" class="result"></div>
+    </div>
+
+    <!-- Include jQuery library for AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Handle form submission using AJAX
+        $(document).ready(function() {
+            $("#sentiment-form").submit(function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                // Get the tweet from the form
+                var tweet = $("#tweet").val();
+
+                // Send the tweet to the server for analysis
+                $.ajax({
+                    type: "POST",
+                    url: "/analyze",
+                    data: {tweet: tweet},
+                    success: function(response) {
+                        // Display the sentiment result on the page
+                        $("#result").html("<p>Sentiment: " + response + "</p>");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
